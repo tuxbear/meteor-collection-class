@@ -9,8 +9,8 @@ Mongo.Collection.prototype.setClass = function(classFn) {
             self._name + "' a transform function already exists!");
 
     self._transform = function(doc) {
-        const extendedDoc = Object.assign(doc, classFn.prototype);
-        if (extendedDoc.hasOwnProperty('collectionClassOnInit') && _.isFunction(extendedDoc.collectionClassOnInit)) {
+        const extendedDoc = Object.assign(new classFn(), doc);
+        if (_.isFunction(extendedDoc.collectionClassOnInit)) {
             extendedDoc.collectionClassOnInit();
         }
         return extendedDoc;

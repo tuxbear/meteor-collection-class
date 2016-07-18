@@ -18,6 +18,13 @@ Keep your domain classes somewhere seen by both client and server.
 ```javascript
 
 class Book {
+
+    constructor() {
+        // constructor is invoked with no arguments
+        // NOTE: fields or functions in the class will be overwritten if names conflict with the collection document
+        this.title = 'this will be overwritten'
+    }
+
     author() {
         return Authors.findOne(this.authorId);
     }
