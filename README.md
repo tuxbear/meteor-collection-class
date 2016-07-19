@@ -5,6 +5,8 @@ Based on https://github.com/dburles/meteor-collection-helpers
 Meteor Collection Class returns ES6 class instances from Meteor Collections. This allows you to create domain models with business logic in ES6 classes and tie them to collections.
 This acts like a very, very lightweight document-to-object mapper
 
+Supports property getters and setters and functions. Class instances can be saved directly.
+
 ## Installation
 
 ```sh
