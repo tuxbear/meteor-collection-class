@@ -26,6 +26,10 @@ class Author {
         return Books.find({authorId: this._id});
     }
 
+    get testGetter() {
+        return "testing";
+    }
+
     documentFieldOverwritten() {
         return 'oh noes this will be overwritten!';
     }
@@ -51,9 +55,12 @@ describe('tuxbear:collection-class', function () {
 
     it('should transform collection documents', function () {
 
+        var authorWithGetterSaved = Authors.insert(new Author());
+
         var author1 = Authors.insert({
             firstName: 'Charles',
-            lastName: 'Darwin'
+            lastName: 'Darwin',
+            test: function() {return "test"}
         });
 
         var author2 = Authors.insert({
