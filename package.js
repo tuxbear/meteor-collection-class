@@ -1,6 +1,6 @@
 Package.describe({
   name: 'tuxbear:collection-class',
-  version: '1.0.1',
+  version: '2.0.1',
 
   // Brief, one-line summary of the package.
   summary: 'Meteor Collection Class returns ES6 class instances from Meteor Collections. ',
@@ -25,3 +25,4 @@ Package.onTest(function(api) {
   api.use('tuxbear:collection-class');
   api.mainModule('collection-class-tests.js');
 });
+

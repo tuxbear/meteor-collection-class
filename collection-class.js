@@ -1,7 +1,20 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 
-Mongo.Collection.prototype.setClass = function(classFn) {
+/**
+ *
+ * @param classDef a constructor function, or an object that defines the type discriminator and corresponding constructors on the form
+ * {
+ *  discriminatorField: 'fieldName',
+ *  types: {
+ *      "type1": TypeOneConstructor,
+ *      "type2": TypeTwoConstructor
+ *  }
+ * }
+ */
+
+
+Mongo.Collection.prototype.setClass = function(classDef) {
     var self = this;
 
     if (self._transform)
@@ -9,10 +22,16 @@ Mongo.Collection.prototype.setClass = function(classFn) {
             self._name + "' a transform function already exists!");
 
     self._transform = function(doc) {
-        const extendedDoc = Object.assign(new classFn(), doc);
+        var constructorFn = _.isFunction(classDef)
+            ? classDef
+            : classDef.types[doc[classDef.discriminatorField]];
+
+        const extendedDoc = Object.assign(new constructorFn(), doc);
         if (_.isFunction(extendedDoc.collectionClassOnInit)) {
             extendedDoc.collectionClassOnInit();
         }
         return extendedDoc;
     };
 };
+
+
