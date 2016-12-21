@@ -21,7 +21,7 @@ Mongo.Collection.prototype.setClass = function(classDef) {
         throw new Meteor.Error("Can't setClass on '" +
             self._name + "' a transform function already exists!");
 
-    self._transform = function(doc) {
+    let transformFn = function(doc) {
         var constructorFn = _.isFunction(classDef)
             ? classDef
             : classDef.types[doc[classDef.discriminatorField]];
@@ -32,6 +32,9 @@ Mongo.Collection.prototype.setClass = function(classDef) {
         }
         return extendedDoc;
     };
+
+    self._transform = transformFn;
+    self.toClassInstance = transformFn;
 };
 
 
